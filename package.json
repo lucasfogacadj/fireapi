@@ -1,0 +1,19 @@
+{
+  "name": "fireapi",
+  "version": "1.0.0",
+  "description": "Api de Fire",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.5.4",
+    "restify": "^8.3.1"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.3.26",
+    "@types/restify": "5.0.6"
+  }
+}
