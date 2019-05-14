@@ -38,14 +38,51 @@ class InterfaceRouter extends router_1.Router {
                 return next();
             });
         });
-        //update data
+        //update sensor data
         application.put('/interface/:id/sensor', (req, resp, next) => {
             var sensor = { kind: req.body.kind, value: req.body.value, date: req.body.date };
             interface_model_1.Interface.update({ _id: req.params.id }, { $push: { sensors: { $each: [sensor], $position: 0 } } }, { $pop: { sensors: 1 } })
                 .exec().then(result => {
                 if (result.n) {
-                    console.log(result);
                     interface_model_1.Interface.update({ _id: req.params.id }, { $pop: { sensors: 1 } })
+                        .exec().then((result) => __awaiter(this, void 0, void 0, function* () {
+                        return yield interface_model_1.Interface.findById(req.params.id);
+                    }));
+                }
+                else {
+                    resp.send(404);
+                }
+            }).then(user => {
+                resp.json(user);
+                return next();
+            });
+        });
+        //update weights data
+        application.put('/interface/:id/weights', (req, resp, next) => {
+            var weight = { value: req.body.value, date: req.body.date };
+            interface_model_1.Interface.update({ _id: req.params.id }, { $push: { weights: { $each: [weight], $position: 0 } } }, { $pop: { weights: 1 } })
+                .exec().then(result => {
+                if (result.n) {
+                    interface_model_1.Interface.update({ _id: req.params.id }, { $pop: { weights: 1 } })
+                        .exec().then((result) => __awaiter(this, void 0, void 0, function* () {
+                        return yield interface_model_1.Interface.findById(req.params.id);
+                    }));
+                }
+                else {
+                    resp.send(404);
+                }
+            }).then(user => {
+                resp.json(user);
+                return next();
+            });
+        });
+        //update alerts data
+        application.put('/interface/:id/alerts', (req, resp, next) => {
+            var alert = { kind: req.body.kind, value: req.body.value, date: req.body.date };
+            interface_model_1.Interface.update({ _id: req.params.id }, { $push: { alerts: { $each: [alert], $position: 0 } } }, { $pop: { alerts: 1 } })
+                .exec().then(result => {
+                if (result.n) {
+                    interface_model_1.Interface.update({ _id: req.params.id }, { $pop: { alerts: 1 } })
                         .exec().then((result) => __awaiter(this, void 0, void 0, function* () {
                         return yield interface_model_1.Interface.findById(req.params.id);
                     }));

@@ -14,7 +14,7 @@ class Server {
         return new Promise((resolve, reject) => {
             try {
                 this.aplication = restify.createServer({
-                    name: 'gado',
+                    name: 'interface',
                     version: '1.0.0'
                 });
                 this.aplication.use(restify.plugins.queryParser());

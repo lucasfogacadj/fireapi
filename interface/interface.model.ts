@@ -24,7 +24,8 @@ const interfaceSchema = new mongoose.Schema({
     }],
     alerts:[{
         kind:String,
-        value:Number
+        value:Number,
+        date: Date
     }]
   })
 

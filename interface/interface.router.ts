@@ -35,13 +35,51 @@ class InterfaceRouter extends Router{
             })
           })
 
-          //update data
+          //update sensor data
           application.put('/interface/:id/sensor', (req, resp, next)=>{
             var sensor = {kind: req.body.kind, value:req.body.value, date: req.body.date}
             Interface.update({_id: req.params.id}, {$push:{sensors:{$each:[sensor], $position:0}}}, {$pop:{sensors:1}})
                 .exec().then(result=>{
               if(result.n){
                 Interface.update({_id: req.params.id}, {$pop:{sensors:1}})
+                .exec().then(async result=>{
+                    return await Interface.findById(req.params.id)
+                })
+              }else{
+                resp.send(404)
+              }
+            }).then(user=>{
+              resp.json(user)
+              return next()
+            })
+          })
+
+           //update weights data
+           application.put('/interface/:id/weights', (req, resp, next)=>{
+            var weight = {value:req.body.value, date: req.body.date}
+            Interface.update({_id: req.params.id}, {$push:{weights:{$each:[weight], $position:0}}}, {$pop:{weights:1}})
+                .exec().then(result=>{
+              if(result.n){
+                Interface.update({_id: req.params.id}, {$pop:{weights:1}})
+                .exec().then(async result=>{
+                    return await Interface.findById(req.params.id)
+                })
+              }else{
+                resp.send(404)
+              }
+            }).then(user=>{
+              resp.json(user)
+              return next()
+            })
+          })
+
+           //update alerts data
+           application.put('/interface/:id/alerts', (req, resp, next)=>{
+            var alert = {kind: req.body.kind, value:req.body.value, date: req.body.date}
+            Interface.update({_id: req.params.id}, {$push:{alerts:{$each:[alert], $position:0}}}, {$pop:{alerts:1}})
+                .exec().then(result=>{
+              if(result.n){
+                Interface.update({_id: req.params.id}, {$pop:{alerts:1}})
                 .exec().then(async result=>{
                     return await Interface.findById(req.params.id)
                 })
